@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -22,13 +23,21 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	@Transactional
 	public Person save(final Person person) {
-		return this.repository.save(person);
+		if( person.getId() != null && !this.repository.exists(person.getId())){
+			return this.repository.save(person);			
+		}else{
+			return null;
+		}
 	}
 
 	@Override
 	@Transactional
 	public Person get(Long id) {
-		return this.repository.getOne(id);
+		if( this.repository.exists(id)){
+			return this.repository.getOne(id);			
+		}else{
+			return null;
+		}
 	}
 
 	@Override
@@ -39,9 +48,12 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	@Transactional
-	public void delete(Long id) {
+	public boolean delete(Long id) {
 		if(this.repository.exists(id)){
-			this.repository.delete(id);			
+			this.repository.delete(id);
+			return true;
+		}else{
+			return false;
 		}
 	}
 	

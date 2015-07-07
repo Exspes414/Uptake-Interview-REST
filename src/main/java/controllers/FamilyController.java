@@ -9,6 +9,8 @@ import main.java.models.Family;
 import main.java.models.FamilyService;
 import main.java.models.Person;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,33 +29,76 @@ public class FamilyController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public Family createFamily(@RequestBody @Valid final Family family){
-		return this.familyService.save(family);		
+	public ResponseEntity<Family> createFamily(@RequestBody @Valid final Family family){
+		
+		Family created = this.familyService.save(family);
+		
+		if( created != null ){
+			return new ResponseEntity<Family>(family, HttpStatus.CREATED);
+		}else{
+			return new ResponseEntity<Family>(HttpStatus.CONFLICT);
+		}
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public List<Family> getAll(){
-		return this.familyService.get();
+	public ResponseEntity<List<Family>> getAll(){
+		return new ResponseEntity<List<Family>>(this.familyService.get(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{id:[\\d]+}", method=RequestMethod.GET)
-	public Family get(@PathVariable("id") Long id){
-		return this.familyService.get(id);
+	public ResponseEntity<Family> get(@PathVariable("id") Long id){
+		
+		Family retrieved = this.familyService.get(id);
+		
+		if( retrieved != null ){
+			return new ResponseEntity<Family>(retrieved, HttpStatus.OK);
+		}else{
+			return new ResponseEntity<Family>(HttpStatus.NOT_FOUND);
+		}
+		
 	}
 	
 	@RequestMapping(value="/{id:[\\d]+}", method=RequestMethod.PUT)
-	public Family put(@PathVariable("id") Long id, @RequestBody @Valid final Family family){
-		return this.familyService.update(id, family);
+	public ResponseEntity<Family> put(@PathVariable("id") Long id, @RequestBody @Valid final Family family){
+		
+		Family updated = this.familyService.update(id, family);
+		
+		if( updated != null ){
+			return new ResponseEntity<Family>(updated, HttpStatus.OK);
+		}else{
+			return new ResponseEntity<Family>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@RequestMapping(value="/{id:[\\d]+}", method=RequestMethod.DELETE)
-	public void delete(@PathVariable("id") Long id){
-		this.familyService.delete(id);
+	public ResponseEntity<Family> delete(@PathVariable("id") Long id){
+		if(this.familyService.delete(id)){
+			return new ResponseEntity<Family>(HttpStatus.OK);
+		}else{
+			return new ResponseEntity<Family>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@RequestMapping(value="/{id:[\\d]+}/members", method=RequestMethod.POST)
-	public Person addMember(@PathVariable("id") Long id, @RequestBody @Valid final Person person){
-		return this.familyService.addMember(id, person);
+	public ResponseEntity<Person> addMember(@PathVariable("id") Long id, @RequestBody @Valid final Person person){
+		
+		Person addedMember = this.familyService.addMember(id,  person);
+		
+		if( addedMember != null ){
+			return new ResponseEntity<Person>(addedMember, HttpStatus.OK);
+		}else{
+			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+		}
+		
+	}
+	
+	@RequestMapping(value="/{familyId:[\\d]+}/members/{personId:[\\d]+}", method=RequestMethod.DELETE)
+	public ResponseEntity<Person> removeMember(@PathVariable("familyId") Long familyId, @PathVariable("personId") Long personId){
+		if( this.familyService.removeMember(familyId, personId)){
+			return new ResponseEntity<Person>(HttpStatus.OK);
+		}else{
+			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 }

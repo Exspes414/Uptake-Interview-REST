@@ -42,9 +42,12 @@ public class FamilyServiceImpl implements FamilyService {
 
 	@Override
 	@Transactional
-	public void delete(Long id) {
+	public boolean delete(Long id) {
 		if( this.familyRepository.exists(id)){
-			this.familyRepository.delete(id);			
+			this.familyRepository.delete(id);
+			return true;
+		}else{
+			return false;
 		}
 	}
 	

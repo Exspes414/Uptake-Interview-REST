@@ -10,7 +10,7 @@ public interface FamilyService {
 	
 	Family get(Long id);
 	
-	void delete(Long id);
+	boolean delete(Long id);
 	
 	Family update(Long id, Family family);
 	
