@@ -8,6 +8,9 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+/**
+ * Concrete implementation of the Family Service that is using a JPA repository as its persistence layer
+ */
 @Service
 @Validated
 public class FamilyServiceImpl implements FamilyService {
@@ -25,7 +28,11 @@ public class FamilyServiceImpl implements FamilyService {
 	@Override
 	@Transactional
 	public Family save(Family family) {
-		return this.familyRepository.save(family);
+		if( family.getId() == null || !this.familyRepository.exists(family.getId())){
+			return this.familyRepository.save(family);			
+		}else{
+			return null;
+		}
 	}
 
 	@Override
@@ -37,7 +44,11 @@ public class FamilyServiceImpl implements FamilyService {
 	@Override
 	@Transactional
 	public Family get(Long id) {
-		return this.familyRepository.findOne(id);
+		if( this.familyRepository.exists(id)){
+			return this.familyRepository.findOne(id);
+		}else{
+			return null;
+		}
 	}
 
 	@Override
@@ -66,7 +77,7 @@ public class FamilyServiceImpl implements FamilyService {
 	@Transactional
 	public Person addMember(Long familyId, Person person) {
 		if(this.familyRepository.exists(familyId)){
-			if( !this.personRepository.exists(person.getId())){
+			if( person.getId() != null || !this.personRepository.exists(person.getId())){
 				person = this.personRepository.save(person);
 			}
 			

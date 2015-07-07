@@ -23,7 +23,7 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	@Transactional
 	public Person save(final Person person) {
-		if( person.getId() != null && !this.repository.exists(person.getId())){
+		if( person.getId() == null || !this.repository.exists(person.getId())){
 			return this.repository.save(person);			
 		}else{
 			return null;
