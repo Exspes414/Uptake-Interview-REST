@@ -40,7 +40,20 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	@Transactional
 	public void delete(Long id) {
-		this.repository.delete(id);
+		if(this.repository.exists(id)){
+			this.repository.delete(id);			
+		}
+	}
+	
+	@Override
+	@Transactional
+	public Person update(Long id, Person person){
+		if(this.repository.exists(id)){
+			person.setId(id);
+			return this.repository.save(person);			
+		}else{
+			return null;
+		}
 	}
 
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/person")
 public class PersonController {
 
 	private final PersonService personService;
@@ -24,18 +25,28 @@ public class PersonController {
 		this.personService = personService;
 	}
 	
-	@RequestMapping(value="/person", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public Person createPerson(@RequestBody @Valid final Person person){
 		return this.personService.save(person);
 	}
 
-	@RequestMapping(value="/person", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public List<Person> getAll(){
 		return this.personService.get();
 	}
 	
-	@RequestMapping(value="/person/{id:[\\d]+}", method=RequestMethod.GET)
+	@RequestMapping(value="/{id:[\\d]+}", method=RequestMethod.GET)
 	public Person getPerson(@PathVariable("id") Long id){
 		return this.personService.get(id);
+	}
+	
+	@RequestMapping(value="/{id:[\\d]+}", method=RequestMethod.PUT)
+	public Person updatePerson(@PathVariable("id") Long id, @RequestBody @Valid final Person person){
+		return this.personService.update(id, person);
+	}
+	
+	@RequestMapping(value="/{id:[\\d]+}", method=RequestMethod.DELETE)
+	public void deletePerson(@PathVariable("id") Long id){
+		this.personService.delete(id);
 	}
 }

@@ -19,7 +19,6 @@ public class Person {
 	@Id
 	@Column(name="id", nullable=false, updatable=false)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@NotNull
 	private Long id;
 	
 	@Column(name="firstName", nullable=false)
@@ -45,6 +44,10 @@ public class Person {
 		this.lastName = lastName;
 	}
 	
+	public void setId(Long id){
+		this.id = id;
+	}
+	
 	@JsonProperty("id")
 	public Long getId() {
 		return id;
@@ -60,12 +63,4 @@ public class Person {
 		return lastName;
 	}
 	
-   @Override
-    public String toString() {
-        return Objects.toStringHelper(this)
-                .add("id", id)
-                .add("firstName", firstName)
-                .add("lastname", lastName)
-                .toString();
-    }
 }
