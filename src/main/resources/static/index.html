@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Family Builder</title>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="js/page.js"></script>
+		<script type="text/javascript" src="js/person.js"></script>
+		<link href="http://fonts.googleapis.com/css?family=Arimo:400,400italic" rel="stylesheet" type="text/css">
+		<link href="https://cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+		<link href="page.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<div class="sidebar">
+			<div class="sidebar-header">
+				<img src="people.png" height="200px" width="200px">
+			</div>
+			<div class="options">
+				<ul>
+					<li> <a href="#person">Person</a></li>
+					<li> <a href="#family">Family</a></li>
+				</ul>
+			</div>
+			<div class="footer">&copy; 2015 - Jacob Williams</div>
+		</div>
+		<div class="content">
+			<div class="topbar"><b>Family Editor</b></div>
+			<div class="main">
+				<div id="person" class="app">
+					<div id="personEdit" class="cell">
+						<div>
+							<input id='idInput' type="hidden">
+							<table>
+								<tr>
+									<td>
+										<label for='firstNameInput'>First name</label><input id='firstNameInput'>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for='lastNameInput'>Last name</label><input id='lastNameInput'>
+									</td>
+								</tr>
+								<tr>
+									<td class="spaceEven">
+										<button value="Create">Create</button>
+										<button value="Update">Update</button>
+										<button value="Delete">Delete</button>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div id="personDisplay" class="cell">
+						<table>
+							<thead>
+								<tr>
+									<td>First Name</td>
+									<td>Last Name</td>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+				<div id="family" class="app"></div>
+			</div>
+		</div>
+	
+	</body>
+</html>
