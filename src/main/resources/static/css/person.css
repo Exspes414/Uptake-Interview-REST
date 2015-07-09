@@ -1,0 +1,57 @@
+@CHARSET "ISO-8859-1";
+
+#person{
+	display: flex;
+	flex-flow: row;
+	width: 100%;
+	height: 100%;
+}
+
+#personEdit{
+	width: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#personEdit div{
+	width: 400px;
+}
+
+#personEdit td{
+	margin: 10px;
+	padding: 10px;
+	font-size: 24px;
+}
+
+#personEdit input{
+	font-size: 24px;
+	width: 200px;
+}
+
+#personEdit label{
+	margin-right: 20px;
+}
+
+#personDisplay{
+	width: 50%;
+}
+
+#personDisplay div{
+}
+
+#personDisplay thead td{
+	border-bottom: 1px solid black;
+	border-top: 1px solid black;
+}
+
+#personDisplay thead td:first-child{
+	border-right: 1px solid black;
+}
+
+
+#personDisplay td{
+	text-align: center;
+	border-bottom: 1px solid lightgrey;
+	font-size: 24px;
+}

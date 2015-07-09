@@ -1,45 +1,6 @@
-var personData = [
-	                  {
-	                	  'id': 1,
-	                	  'firstName': 'Jacob',
-	                	  'lastName': 'Williams'
-	                  },
-	                  {
-	                	  'id': 2,
-	                	  'firstName': 'Marie',
-	                	  'lastName': 'Williams'
-	                  },
-	                  {
-	                	  'id': 3,
-	                	  'firstName': 'Steve',
-	                	  'lastName': 'Williams'
-	                  },
-	                  {
-	                	  'id': 4,
-	                	  'firstName': 'Mikey',
-	                	  'lastName': 'Williams'
-	                  },
-	                  {
-	                	  'id': 5,
-	                	  'firstName': 'Michelle',
-	                	  'lastName': 'Williams'
-	                  },
-	                  {
-	                	  'id': 6,
-	                	  'firstName': 'Joe',
-	                	  'lastName': 'Smith'
-	                  },
-	                  {
-	                	  'id': 7,
-	                	  'firstName': 'Jane',
-	                	  'lastName': 'Smith'
-	                  },
-	                  {
-	                	  'id': 8,
-	                	  'firstName': 'Another',
-	                	  'lastName': 'Person'
-	                  },
-                  ];
+var personData = [];
+
+var personTable;
 
 $(window).ready(function(){
 		
@@ -56,7 +17,7 @@ $(window).ready(function(){
     		$(row).click(function(){
     			$('#personDisplay table .selected').removeClass('selected');
     			$(row).addClass('selected');
-    			$('#idInput').val(data["idName"]);
+    			$('#personIdInput').val(data["idName"]);
     			$('#firstNameInput').val(data["firstName"]);
     			$('#lastNameInput').val(data["lastName"]);
     		});
@@ -69,13 +30,14 @@ $(window).ready(function(){
 	
 	personTable.api().rows.add(personData).draw();
 	
-	/*
 	$.get("/person", function(data){
 		personData = data;
+		personTable.api().rows.add(personData).draw();
 	}).fail(function(){
 		// Display error
 	});
-	*/
+	
+	
 	
 	
 });

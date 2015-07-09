@@ -7,9 +7,12 @@
 		<script type="text/javascript" src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
 		<script type="text/javascript" src="js/page.js"></script>
 		<script type="text/javascript" src="js/person.js"></script>
+		<script type="text/javascript" src="js/family.js"></script>
 		<link href="http://fonts.googleapis.com/css?family=Arimo:400,400italic" rel="stylesheet" type="text/css">
 		<link href="https://cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
-		<link href="page.css" rel="stylesheet" type="text/css">
+		<link href="css/page.css" rel="stylesheet" type="text/css">
+		<link href="css/person.css" rel="stylesheet" type="text/css">
+		<link href="css/family.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
 		<div class="sidebar">
@@ -28,9 +31,20 @@
 			<div class="topbar"><b>Family Editor</b></div>
 			<div class="main">
 				<div id="person" class="app">
+					<div id="personDisplay" class="cell">
+						<table>
+							<thead>
+								<tr>
+									<td>First Name</td>
+									<td>Last Name</td>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
 					<div id="personEdit" class="cell">
 						<div>
-							<input id='idInput' type="hidden">
+							<input id='personIdInput' type="hidden">
 							<table>
 								<tr>
 									<td>
@@ -52,19 +66,69 @@
 							</table>
 						</div>
 					</div>
-					<div id="personDisplay" class="cell">
+				</div>
+				<div id="family" class="app">
+					<div id="familyDisplay" class="cell">
 						<table>
 							<thead>
 								<tr>
-									<td>First Name</td>
-									<td>Last Name</td>
+									<td>Family</td>
 								</tr>
 							</thead>
 							<tbody></tbody>
 						</table>
 					</div>
+					<div id="familyEdit" class="cell">
+						<div id="familyEdit-topControls">
+							<input id='familyIdInput' type="hidden">
+							<table>
+								<tr>
+									<td>
+										<label for='familyName'>Family name</label><input id='familyNameInput'>
+									</td>
+								</tr>
+								<tr>
+									<td class="spaceEven">
+										<button value="Create">Create</button>
+										<button value="Update">Update</button>
+										<button value="Delete">Delete</button>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div>
+						<div id="familyEdit-lowerControls">
+							<div id="familyAddMember">
+								<table>
+									<thead>
+										<tr>
+											<td>First Name</td>
+											<td>Last Name</td>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+							<div id="lowerControls-buttons">
+								<button>Add</button>
+								<button>Remove</button>
+							</div>
+							<div id="familyMembersTable">
+							<table>
+								<thead>
+									<tr>
+										<td>First Name</td>
+										<td>Last Name</td>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>
+							</div>
+						</div>
+						</div>
+						
+					</div>
 				</div>
-				<div id="family" class="app"></div>
 			</div>
 		</div>
 	
