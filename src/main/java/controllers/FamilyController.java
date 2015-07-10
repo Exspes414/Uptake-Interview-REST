@@ -45,7 +45,7 @@ public class FamilyController {
 		Family created = this.familyService.save(family);
 		
 		if( created != null ){
-			return new ResponseEntity<Family>(family, HttpStatus.CREATED);
+			return new ResponseEntity<Family>(created, HttpStatus.CREATED);
 		}else{
 			return new ResponseEntity<Family>(HttpStatus.CONFLICT);
 		}
@@ -115,8 +115,8 @@ public class FamilyController {
 	 * @param person The Person object to add the Family
 	 * @return The Person object added to the Family or HTTP 404 if the Family object could not be found
 	 */
-	@RequestMapping(value="/{id:[\\d]+}/members", method=RequestMethod.POST)
-	public ResponseEntity<Person> addMember(@PathVariable("id") Long id, @RequestBody @Valid final Person person){
+	@RequestMapping(value="/{familyId:[\\d]+}/members/{personId:[\\d]+}", method=RequestMethod.POST)
+	public ResponseEntity<Person> addMember(@PathVariable("familyId") Long id, @PathVariable("personId") @Valid final Long person){
 		
 		Person addedMember = this.familyService.addMember(id,  person);
 		

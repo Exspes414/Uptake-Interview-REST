@@ -1,9 +1,8 @@
-var personData = [];
-
 var personTable;
 
 $(window).ready(function(){
 		
+	// Initialize the Person table and add the handler for clicking on rows
 	personTable = $('#personDisplay table').dataTable({
 		"sScrollY": ($('#personDisplay').height() - 200),
 		"bPaginate": false,
@@ -15,8 +14,12 @@ $(window).ready(function(){
 	            ],
     	"createdRow": function(row, data, dataIndex){
     		$(row).click(function(){
+    			
+    			// Change which row is highlighted
     			$('#personDisplay table .selected').removeClass('selected');
     			$(row).addClass('selected');
+    			
+    			// Set the edit data
     			$('#personIdInput').val(data["id"]);
     			$('#firstNameInput').val(data["firstName"]);
     			$('#lastNameInput').val(data["lastName"]);
@@ -28,14 +31,15 @@ $(window).ready(function(){
 		personTable.fnAdjustColumnSizing();
 	});
 	
-	personTable.api().rows.add(personData).draw();
-	
+	// Get the initial data
 	$.get("/person", function(data){
-		personData = data;
-		personTable.api().rows.add(personData).draw();
+		personTable.api().rows.add(data).draw();
 	}).fail(function(){
 		// Display error
 	});
+	
+	// Add button Handlers
+	
 	
 	$('#personCreate').click(function(){
 		
@@ -52,27 +56,27 @@ $(window).ready(function(){
 			success: function(data){
 				
     			$('#personIdInput').val(data["id"]);
-    			$('#firstNameInput').val(data["firstName"]);
-    			$('#lastNameInput').val(data["lastName"]);
 				
     			var table = $('#personDisplay table').DataTable();
     			
-				personTable.api().row.add(data).draw();
+				table.row.add(data).draw();
 				
+				// Set the new row as the selected row
 				var index = table.rows().eq(0).filter(function(index){
 					return table.row(index).data()["id"] == data["id"] ? true : false;
 				});
 				
     			$('#personDisplay table .selected').removeClass('selected');
     			table.rows(index).nodes().to$().addClass('selected');
-				
+				    			
+    			$('#familyDisplay .selected').click();
 			}
 		});
 	});
 	
 	$('#personUpdate').click(function(){
 		
-		person = {
+		var person = {
 				"id": $('#personIdInput').val(),
 				"firstName": $('#firstNameInput').val(),
 				"lastName": $('#lastNameInput').val()
@@ -89,9 +93,12 @@ $(window).ready(function(){
 
 					var table = $('#personDisplay table').DataTable();
 					
+					// Update the data in the table
 					var index = table.rows('.selected')[0][0];
 					
 					table.row(index).data(data);
+
+					$('#familyDisplay .selected').click();
 				}
 			});
 			
@@ -115,8 +122,9 @@ $(window).ready(function(){
 				success: function(){
 					var table = $('#personDisplay table').DataTable();
 					
+					// Remove the selected row and select the next row (which will now be where the deleted row was)
 					var index = table.rows('.selected')[0][0];
-														
+																								
 	    			table.rows('.selected').remove().draw();
 	    			
 	    			table.row(index).nodes().to$().addClass('selected');
@@ -126,6 +134,8 @@ $(window).ready(function(){
 	    			$('#personIdInput').val(data["id"]);
 	    			$('#firstNameInput').val(data["firstName"]);
 	    			$('#lastNameInput').val(data["lastName"]);
+
+	    			$('#familyDisplay .selected').click();
 	    			
 				}
 			});

@@ -45,10 +45,10 @@ public interface FamilyService {
 	/**
 	 * Adds a member to the specified Family object
 	 * @param familyId The family to add a person to
-	 * @param person The person object to add to the Family
+	 * @param personId The id of the person object to add to the Family
 	 * @return The state of the added Person object or null if no Family exists with the specified Id
 	 */
-	Person addMember(Long familyId, Person person);
+	Person addMember(Long familyId, Long person);
 	
 	/**
 	 * Removes a Person from a Family

@@ -75,17 +75,14 @@ public class FamilyServiceImpl implements FamilyService {
 
 	@Override
 	@Transactional
-	public Person addMember(Long familyId, Person person) {
-		if(this.familyRepository.exists(familyId)){
-			if( person.getId() != null || !this.personRepository.exists(person.getId())){
-				person = this.personRepository.save(person);
-			}
-			
-			Family f = this.familyRepository.getOne(familyId);
-			f.getMembers().add(person);
-			this.familyRepository.save(f);
-			
-			return person;
+	public Person addMember(Long familyId, Long personId) {
+		if(this.familyRepository.exists(familyId) && this.personRepository.exists(personId)){
+				Family f = this.familyRepository.getOne(familyId);
+				Person person = this.personRepository.getOne(personId);
+				f.getMembers().add(person);
+				this.familyRepository.save(f);
+				
+				return person;
 			
 		}else{
 			return null;
